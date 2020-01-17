@@ -1,21 +1,18 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router } from "react-router";
+// import { Router } from "react-router";
 import {
-    // BrowserRouter as Router,
+    BrowserRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom"
-// import { Router, Route, Link, hashHistory } from 'react-router'
-
-import { createBrowserHistory } from "history"
 
 import StartSection from "./start_section.js"
 import ReactSection from "./react_section.js"
 import ReduxSection from "./redux_section.js"
 
-const history = createBrowserHistory();
+// const customHistory = createBrowserHistory();
 const API = 'https://cwpeng.github.io/live-records-samples/data/content.json'
 
 class HomePage extends React.Component {
@@ -112,7 +109,7 @@ class App extends React.Component{
 }
 
 ReactDOM.render(
-    <Router history={history}>
+    <Router>
         <App/>
     </Router>,
 document.querySelector('#root'))
