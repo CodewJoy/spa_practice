@@ -1,5 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
+import { Router, Route, Link } from 'react-router'
+
 
 const API = 'https://cwpeng.github.io/live-records-samples/data/content.json'
 
@@ -11,11 +13,11 @@ class StartSection extends React.Component {
     render() {
         let chapters0 = this.props.chapters0;
         return (
-            <div id={chapters0.key}>
+            <ul id={chapters0.key}>
                 {chapters0.sections.map((item,index) => (
-                    <p key={index}>{item}</p>
+                    <li key={index}>{item}</li>
                 ))}
-            </div>
+            </ul>
         )
     }
 }
@@ -28,11 +30,11 @@ class ReactSection extends React.Component {
     render() {
         let chapters1 = this.props.chapters1;
         return (
-            <div id={chapters1.key}>
+            <ul id={chapters1.key}>
                 {chapters1.sections.map((item,index) => (
-                    <p key={index}>{item}</p>
+                    <li key={index}>{item}</li>
                 ))}
-            </div>
+            </ul>
         )
     }
 }
@@ -45,11 +47,19 @@ class ReduxSection extends React.Component {
     render() {
         let chapters2 = this.props.chapters2;
         return (
-            <div id={chapters2.key}>
+            <ul id={chapters2.key}>
                 {chapters2.sections.map((item,index) => (
-                    <p key={index}>{item}</p>
+                    <li key={index}>{item}</li>
                 ))}
-            </div>
+            </ul>
+        )
+    }
+}
+
+class HomePage extends React.Component {
+    render() {
+        return (
+            <h1>{this.props.headline}</h1>
         )
     }
 }
@@ -75,9 +85,9 @@ class App extends React.Component{
               isLoaded: true,
               headline: result.headline,
               chapters: result.chapters
-            });
-            console.log(this.state);
-            console.log(this.state.chapters);
+            })
+            console.log(this.state)
+            console.log(this.state.chapters)
             console.log(this.state.chapters[0])
             console.log(this.state.chapters[0].sections[0])
           },
@@ -88,31 +98,42 @@ class App extends React.Component{
             this.setState({
               isLoaded: true,
               error
-            });
+            })
           }
         )
-        console.log(this.state);
+        console.log(this.state)
     }
     render() {
-        const { error, isLoaded, headline, chapters } = this.state;
+        const { error, isLoaded, headline, chapters } = this.state
         if (error) {
-          return <div>Error: {error.message}</div>;
+          return <div>Error: {error.message}</div>
         } else if (!isLoaded) {
-          return <div>Loading...</div>;
+          return <div>Loading...</div>
         } else {
             return (
                 <div>
                     <nav>
-                        <ul>
-                            {this.state.chapters.map(item => (
-                                <li key={item.key} id={item.key}>
+                        <div>
+                            {/* {this.state.chapters.map(item => (
+                                <p>
+                                    <Link to={'/'+item.key} key={item.key}>
                                     {item.title}
-                                </li>
+                                    </Link>
+                                </p>
+                            ))} */}
+                        </div>
+                        <div>
+                            {this.state.chapters.map(item => (
+                                <p key={item.key} id={item.key}>
+                                    {item.title}
+                                </p>
                             ))}
-                        </ul>
+                        </div>
                     </nav>
                     <section>
-                        <h1>{this.state.headline}</h1>    
+                        <HomePage
+                            headline = {this.state.headline}
+                        />                       
                         <StartSection
                             chapters0 = {this.state.chapters[0]}
                         />
@@ -129,4 +150,4 @@ class App extends React.Component{
     }
 }
 
-ReactDOM.render(<App/>, document.querySelector('#root'));
+ReactDOM.render(<App/>, document.querySelector('#root'))
